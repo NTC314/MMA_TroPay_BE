@@ -17,6 +17,7 @@ const transactionRoutes = require('./src/routes/transaction.routes');
 const walletRoutes = require('./src/routes/wallet.routes');
 const paymentRoutes = require('./src/routes/payment.routes');
 const notificationRoutes = require('./src/routes/notification.routes');
+const roomRoutes = require('./src/routes/room.routes');
 
 // Import middleware
 const errorHandler = require('./src/middleware/errorHandler');
@@ -95,6 +96,7 @@ app.use('/api/transactions', transactionRoutes);
 app.use('/api/wallets', walletRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/rooms', roomRoutes);
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {

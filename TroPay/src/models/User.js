@@ -49,8 +49,8 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin', 'super_admin'],
-    default: 'user'
+    enum: ['owner', 'tenant', 'admin'],
+    default: 'tenant'
   },
   kyc_status: {
     type: String,
@@ -77,8 +77,12 @@ const userSchema = new mongoose.Schema({
   last_login: {
     type: Date
   },
-  fcm_token: {
-    type: String
+  profile: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
+  },
+  deleted_at: {
+    type: Date
   },
   otp: {
     type: String,

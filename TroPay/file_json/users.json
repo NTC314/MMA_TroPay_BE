@@ -1,0 +1,16 @@
+[
+  {
+    "fullName": "Nguyen Van A",
+    "email": "a@example.com",
+    "password": "hashed_password",
+    "phone": "0901234567",
+    "role": "landlord"
+  },
+  {
+    "fullName": "Tran Thi B",
+    "email": "b@example.com",
+    "password": "hashed_password",
+    "phone": "0912345678",
+    "role": "tenant"
+  }
+]

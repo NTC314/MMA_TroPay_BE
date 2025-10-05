@@ -40,24 +40,37 @@ TroPay là một ứng dụng ví điện tử hiện đại được xây dựn
 ## 📁 Cấu trúc dự án
 
 ```
-TroPay/
-├── src/
-│   ├── config/          # Cấu hình database, redis, swagger
-│   ├── controllers/     # Xử lý logic nghiệp vụ
-│   ├── middleware/      # Middleware xác thực, upload file
-│   ├── models/          # Database models (Sequelize)
-│   ├── routes/          # API routes
-│   ├── services/        # Business logic services
-│   ├── utils/           # Utility functions
-│   └── validators/      # Request validation
-├── migrations/          # Database migrations
-├── seeders/            # Database seeders
-├── tests/              # Unit & integration tests
-├── logs/               # Log files
-├── uploads/            # Temporary file uploads
-├── .env.example        # Environment variables template
-├── server.js           # Main server file
-└── package.json        # Dependencies
+TroPay/ (✨ Đã tối ưu cấu trúc)
+├── 📄 server.js              # Entry point chính
+├── 📄 package.json          # Dependencies và scripts  
+├── 📄 .env                  # Cấu hình môi trường
+├── 📄 .env.example         # Template môi trường
+├── 📄 .gitignore           # Git ignore rules
+├── 📄 jsconfig.json        # JavaScript config
+├── 📄 README.md            # Documentation này
+├── 📄 ARCHITECTURE.md      # Kiến trúc chi tiết
+├── 📁 src/                 # 🎯 Source code chính
+│   ├── 📁 config/          # Database, swagger, app config
+│   ├── 📁 controllers/     # Business logic handlers
+│   ├── 📁 middleware/      # Auth, upload, error handling
+│   ├── 📁 models/          # MongoDB Mongoose schemas
+│   ├── 📁 routes/          # API route definitions
+│   ├── 📁 services/        # External services integration
+│   ├── 📁 utils/           # Helper functions & utilities
+│   └── 📁 validators/      # Input validation với Joi
+├── 📁 tests/               # Test files và utilities
+├── 📁 logs/                # Winston application logs
+├── 📁 uploads/             # File storage directory
+└── 📁 node_modules/        # NPM dependencies
+
+❌ Đã xóa các thư mục không cần thiết:
+    • public/ (static files - không dùng cho API)
+    • views/ (template rendering - không dùng)
+    • routes/ (cũ - đã chuyển vào src/)
+    • bin/ (www script - không cần)
+    • config/ (cũ - đã chuyển vào src/)
+    • migrations/, seeders/ (SQL migrations - MongoDB không cần)
+    • scripts/ (empty folder)
 ```
 
 ## 🚦 Cài đặt và chạy

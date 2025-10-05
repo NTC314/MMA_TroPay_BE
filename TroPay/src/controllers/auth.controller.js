@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { User, Wallet } = require('../models');
 const logger = require('../utils/logger');
+const bcrypt = require('bcryptjs/dist/bcrypt');
+const bcryptjs = require('bcryptjs');
 
 // Generate JWT Token
 const generateToken = (userId) => {
@@ -96,7 +98,7 @@ const login = async (req, res) => {
     }
 
     // Check password
-    const isPasswordValid = await user.comparePassword(password);
+    const isPasswordValid = await bcryptjs.comparePassword(password);
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
