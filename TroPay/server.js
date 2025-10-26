@@ -44,7 +44,11 @@ app.use(cors({
       process.env.FRONTEND_URL,
       process.env.ADMIN_URL,
       'http://localhost:3000',
-      'http://localhost:3001'
+      'http://localhost:3001',
+      'http://localhost:8081', // Expo development server
+      'exp://localhost:8081',   // Expo development server
+      'exp://192.168.1.100:8081', // Expo on local network
+      'exp://10.0.2.2:8081'     // Android emulator
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);

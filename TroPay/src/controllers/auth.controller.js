@@ -86,10 +86,16 @@ const register = async (req, res) => {
 // @access  Public
 const login = async (req, res) => {
   try {
-    const { phone, password } = req.body;
+    const { phone_or_email, password } = req.body;
 
-    // Check if user exists and get password
-    const user = await User.findOne({ phone }).select('+password');
+    // Check if user exists by phone or email and get password
+    const user = await User.findOne({
+      $or: [
+        { phone: phone_or_email },
+        { email: phone_or_email }
+      ]
+    }).select('+password');
+    
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -98,7 +104,7 @@ const login = async (req, res) => {
     }
 
     // Check password
-    const isPasswordValid = await bcryptjs.comparePassword(password);
+    const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
@@ -292,9 +298,32 @@ const resetPassword = async (req, res) => {
   }
 };
 
+// @desc    Logout user
+// @route   POST /api/auth/logout
+// @access  Private
+const logout = async (req, res) => {
+  try {
+    // In a real application, you might want to blacklist the token
+    // For now, we'll just return success
+    logger.info(`User logged out: ${req.user.id}`);
+    
+    res.json({
+      success: true,
+      message: 'Logout successful'
+    });
+  } catch (error) {
+    logger.error('Logout error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error logging out'
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  logout,
   verifyPhone,
   resendOTP,
   changePassword,

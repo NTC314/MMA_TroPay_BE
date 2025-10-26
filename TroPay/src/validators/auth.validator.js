@@ -45,12 +45,10 @@ const validateRegister = (req, res, next) => {
 
 const validateLogin = (req, res, next) => {
   const schema = Joi.object({
-    phone: Joi.string()
-      .pattern(/^[0-9]{10,15}$/)
+    phone_or_email: Joi.string()
       .required()
       .messages({
-        'string.pattern.base': 'Phone number must be 10-15 digits',
-        'any.required': 'Phone number is required'
+        'any.required': 'Phone number or email is required'
       }),
     password: Joi.string()
       .required()

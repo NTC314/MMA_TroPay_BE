@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, verifyPhone, resendOTP, changePassword, forgotPassword, resetPassword } = require('../controllers/auth.controller');
+const { register, login, logout, verifyPhone, resendOTP, changePassword, forgotPassword, resetPassword } = require('../controllers/auth.controller');
 const { auth } = require('../middleware/auth');
 const { validateRegister, validateLogin, validateChangePassword } = require('../validators/auth.validator');
 
@@ -148,5 +148,21 @@ router.put('/change-password', auth, validateChangePassword, changePassword);
 
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
+
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Logout user
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Logout successful
+ *       401:
+ *         description: Unauthorized
+ */
+router.post('/logout', auth, logout);
 
 module.exports = router;
