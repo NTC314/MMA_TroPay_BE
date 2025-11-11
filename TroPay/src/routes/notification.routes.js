@@ -70,4 +70,24 @@ router.put('/:id/read', (req, res) => {
   res.json({ message: `Mark notification ${req.params.id} as read` });
 });
 
+/**
+ * @swagger
+ * /api/notifications/read-all:
+ *   put:
+ *     summary: Mark all notifications as read
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: All notifications marked as read
+ */
+router.put('/read-all', (req, res) => {
+  res.json({ 
+    success: true,
+    message: 'All notifications marked as read',
+    data: { updatedCount: 0 }
+  });
+});
+
 module.exports = router;

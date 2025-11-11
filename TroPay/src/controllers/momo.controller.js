@@ -236,6 +236,45 @@ const handleCallback = async (req, res) => {
         logger.error('Error sending payment notifications:', notifError);
       }
 
+      // Emit Socket.IO event to notify clients about payment success
+      try {
+        const io = req.app.get('io');
+        if (io) {
+          const fullInvoice = await Invoice.findById(invoice._id)
+            .populate('room_id', 'owner_id')
+            .populate('contract_id', 'tenant_id');
+          
+          const tenantId = parsedExtraData.userId || fullInvoice.contract_id?.tenant_id?.toString();
+          const ownerId = fullInvoice.room_id?.owner_id?.toString();
+          
+          // Emit to tenant
+          if (tenantId) {
+            io.to(`user_${tenantId}`).emit('payment-success', {
+              invoiceId: invoice._id,
+              paymentId: payment._id,
+              amount: payment.amount,
+              orderId: callbackData.orderId,
+              transId: callbackData.transId
+            });
+            logger.info(`Emitted payment-success to tenant ${tenantId}`);
+          }
+          
+          // Emit to owner
+          if (ownerId) {
+            io.to(`user_${ownerId}`).emit('payment-received', {
+              invoiceId: invoice._id,
+              paymentId: payment._id,
+              amount: payment.amount,
+              orderId: callbackData.orderId,
+              transId: callbackData.transId
+            });
+            logger.info(`Emitted payment-received to owner ${ownerId}`);
+          }
+        }
+      } catch (socketError) {
+        logger.error('Error emitting socket event:', socketError);
+      }
+
       logger.info('MoMo payment successful', {
         orderId: callbackData.orderId,
         transId: callbackData.transId,

@@ -153,6 +153,29 @@ const createContract = async (req, res) => {
       terms 
     } = req.body;
 
+    // Validate required fields
+    if (!room_id || !tenant_id || !start_date || !end_date || !rent_amount || !deposit_amount) {
+      return res.status(400).json({
+        success: false,
+        message: 'Thiếu thông tin bắt buộc'
+      });
+    }
+
+    // Validate ObjectId format
+    const mongoose = require('mongoose');
+    if (!mongoose.Types.ObjectId.isValid(room_id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'ID phòng không hợp lệ'
+      });
+    }
+    if (!mongoose.Types.ObjectId.isValid(tenant_id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'ID người thuê không hợp lệ'
+      });
+    }
+
     // Validate room belongs to owner
     const room = await Room.findOne({ _id: room_id, owner_id: ownerId });
 

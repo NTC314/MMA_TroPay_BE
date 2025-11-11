@@ -281,6 +281,16 @@ const createInvoice = async (req, res) => {
     const ownerId = req.user.id;
     const { contract_id, room_id, period_start, period_end, items, due_date, notes } = req.body;
     
+    console.log('Create invoice request:', req.body);
+    
+    // Validate required fields
+    if (!room_id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Room ID is required'
+      });
+    }
+    
     // Validate room belongs to owner
     const room = await Room.findOne({ _id: room_id, owner_id: ownerId });
     
@@ -289,6 +299,24 @@ const createInvoice = async (req, res) => {
         success: false,
         message: 'Không có quyền tạo hóa đơn cho phòng này'
       });
+    }
+    
+    // If contract_id not provided, find active contract for the room
+    let finalContractId = contract_id;
+    if (!finalContractId) {
+      const activeContract = await Contract.findOne({
+        room_id: room_id,
+        status: 'active'
+      });
+      
+      if (!activeContract) {
+        return res.status(400).json({
+          success: false,
+          message: 'Phòng này chưa có hợp đồng thuê hoạt động'
+        });
+      }
+      
+      finalContractId = activeContract._id;
     }
     
     // Calculate totals
@@ -301,12 +329,17 @@ const createInvoice = async (req, res) => {
     const discount = 0;
     const total_amount = subtotal + tax - discount;
     
+    // Parse dates
+    const parsedPeriodStart = period_start ? new Date(period_start) : new Date();
+    const parsedPeriodEnd = period_end ? new Date(period_end) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    const parsedDueDate = due_date ? new Date(due_date) : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    
     // Create invoice
     const invoice = new Invoice({
-      contract_id,
+      contract_id: finalContractId,
       room_id,
-      period_start: new Date(period_start),
-      period_end: new Date(period_end),
+      period_start: parsedPeriodStart,
+      period_end: parsedPeriodEnd,
       items,
       subtotal,
       tax,
@@ -314,14 +347,14 @@ const createInvoice = async (req, res) => {
       total_amount,
       status: 'issued',
       issued_at: new Date(),
-      due_date: new Date(due_date),
+      due_date: parsedDueDate,
       notes
     });
     
     await invoice.save();
     
     // Get contract to find tenant ID
-    const contract = await Contract.findById(contract_id);
+    const contract = await Contract.findById(finalContractId);
     if (contract && contract.tenant_id) {
       // Send notification to tenant
       try {

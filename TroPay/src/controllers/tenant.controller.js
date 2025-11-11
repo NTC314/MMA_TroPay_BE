@@ -328,6 +328,24 @@ const getTenantServiceUsage = async (req, res) => {
     const currentMonth = moment().format('YYYY-MM');
     const currentUsage = await getServiceUsageForMonth(contract.room_id, currentMonth);
     
+    // Get previous month usage for comparison
+    const previousMonth = moment().subtract(1, 'months').format('YYYY-MM');
+    const previousUsage = await getServiceUsageForMonth(contract.room_id, previousMonth);
+    
+    // Calculate change percentage and add previousValue
+    const enrichedCurrentUsage = {};
+    for (const [serviceType, data] of Object.entries(currentUsage)) {
+      const prevValue = previousUsage[serviceType]?.value || 0;
+      const currentValue = data.value || 0;
+      const change = prevValue > 0 ? ((currentValue - prevValue) / prevValue * 100).toFixed(1) : 0;
+      
+      enrichedCurrentUsage[serviceType] = {
+        ...data,
+        previousValue: prevValue,
+        change: parseFloat(change)
+      };
+    }
+    
     // Get AI prediction (simplified version)
     const prediction = await getServiceUsagePrediction(contract.room_id, serviceUsage);
     
@@ -337,7 +355,7 @@ const getTenantServiceUsage = async (req, res) => {
       success: true,
       message: 'Dữ liệu sử dụng dịch vụ được lấy thành công',
       data: {
-        currentUsage,
+        currentUsage: enrichedCurrentUsage,
         historicalData: serviceUsage,
         prediction
       }
@@ -357,7 +375,7 @@ const getTenantServiceUsage = async (req, res) => {
 const getTenantServiceHistory = async (req, res) => {
   try {
     const tenantId = req.user.id;
-    const { page = 1, limit = 20 } = req.query;
+    const { limit = 6 } = req.query;
     
     // Get tenant's contract
     const contract = await Contract.findOne({ 
@@ -372,31 +390,73 @@ const getTenantServiceHistory = async (req, res) => {
       });
     }
     
-    // Get meter readings
-    const readings = await MeterReading.find({
-      room_id: contract.room_id
-    })
-    .sort({ reading_date: -1 })
-    .populate('service_type_id', 'name unit')
-    .populate('recorded_by', 'full_name')
-    .limit(parseInt(limit) * parseInt(page))
-    .skip((parseInt(page) - 1) * parseInt(limit));
+    logger.info(`Getting service history for room ${contract.room_id}, limit: ${limit} months`);
     
-    logger.info(`Tenant ${tenantId} retrieved service history`);
+    // Get service usage for last N months
+    const months = parseInt(limit);
+    const history = [];
+    let totalElectricity = 0;
+    let totalWater = 0;
+    let totalInternet = 0;
+    let totalCost = 0;
+    let monthsWithData = 0;
+    
+    for (let i = months - 1; i >= 0; i--) {
+      const monthStr = moment().subtract(i, 'months').format('YYYY-MM');
+      const usage = await getServiceUsageForMonth(contract.room_id, monthStr);
+      
+      const monthData = {
+        month: moment(monthStr).format('MM/YYYY'), // Format as MM/YYYY for display
+        monthValue: monthStr, // Keep YYYY-MM format for sorting/filtering
+        totalCost: 0,
+        electricity: {
+          value: usage.electricity?.value || 0,
+          cost: usage.electricity?.cost || 0,
+          unit: 'kWh'
+        },
+        water: {
+          value: usage.water?.value || 0,
+          cost: usage.water?.cost || 0,
+          unit: 'm³'
+        },
+        internet: {
+          value: usage.internet?.value || 0,
+          cost: usage.internet?.cost || 0,
+          unit: 'tháng'
+        }
+      };
+      
+      monthData.totalCost = monthData.electricity.cost + monthData.water.cost + monthData.internet.cost;
+      
+      if (monthData.totalCost > 0) {
+        monthsWithData++;
+        totalElectricity += monthData.electricity.value;
+        totalWater += monthData.water.value;
+        totalInternet += monthData.internet.value;
+        totalCost += monthData.totalCost;
+      }
+      
+      history.push(monthData);
+    }
+    
+    // Calculate summary
+    const summary = {
+      totalMonths: monthsWithData,
+      averageElectricity: monthsWithData > 0 ? Math.round(totalElectricity / monthsWithData) : 0,
+      averageWater: monthsWithData > 0 ? Math.round(totalWater / monthsWithData) : 0,
+      averageInternet: monthsWithData > 0 ? Math.round(totalInternet / monthsWithData) : 0,
+      totalCost: Math.round(totalCost),
+      averageCost: monthsWithData > 0 ? Math.round(totalCost / monthsWithData) : 0
+    };
+    
+    logger.info(`Service history retrieved: ${history.length} months, ${monthsWithData} with data`);
     
     res.json({
       success: true,
       message: 'Lịch sử sử dụng dịch vụ được lấy thành công',
       data: {
-        readings: readings.map(reading => ({
-          id: reading._id,
-          serviceType: reading.service_type_id.name,
-          unit: reading.service_type_id.unit,
-          value: reading.reading_value,
-          date: reading.reading_date,
-          recordedBy: reading.recorded_by.full_name,
-          source: reading.source
-        }))
+        history,
+        summary
       }
     });
   } catch (error) {
@@ -676,35 +736,95 @@ const getServiceUsageForMonth = async (roomId, month) => {
   const startDate = moment(month).startOf('month').toDate();
   const endDate = moment(month).endOf('month').toDate();
   
+  logger.info(`Getting service usage for room ${roomId}, month ${month}, date range: ${startDate} to ${endDate}`);
+  
+  // Try to get data from MeterReading first
   const readings = await MeterReading.find({
     room_id: roomId,
     reading_date: { $gte: startDate, $lte: endDate }
   }).populate('service_type_id');
   
-  const usage = {};
-  readings.forEach(reading => {
-    const serviceType = reading.service_type_id.name;
-    if (!usage[serviceType]) {
-      usage[serviceType] = {
-        value: 0,
-        unit: reading.service_type_id.unit,
-        cost: 0
-      };
-    }
-    usage[serviceType].value += reading.reading_value;
-  });
+  logger.info(`Found ${readings.length} meter readings`);
   
-  // Calculate costs
-  for (const [serviceType, data] of Object.entries(usage)) {
-    const serviceRate = await ServiceRate.findOne({
-      service_type: serviceType,
-      is_active: true
+  const usage = {};
+  
+  if (readings && readings.length > 0) {
+    // Use MeterReading data if available
+    readings.forEach(reading => {
+      const serviceType = reading.service_type_id;
+      const serviceCode = serviceType.code; // Use code (electricity, water, internet, etc.)
+      
+      logger.info(`Processing reading: ${serviceCode}, value: ${reading.reading_value}`);
+      
+      if (!usage[serviceCode]) {
+        usage[serviceCode] = {
+          value: 0,
+          unit: serviceType.unit,
+          cost: 0
+        };
+      }
+      usage[serviceCode].value += reading.reading_value;
     });
-    if (serviceRate) {
-      data.cost = data.value * serviceRate.rate;
+    
+    // Calculate costs based on service rates
+    for (const [serviceCode, data] of Object.entries(usage)) {
+      const serviceType = await ServiceType.findOne({ code: serviceCode });
+      if (serviceType) {
+        const serviceRate = await ServiceRate.findOne({
+          service_type_id: serviceType._id,
+          room_id: null,  // Global rate
+          start_date: { $lte: endDate },
+          end_date: { $gte: startDate }
+        });
+        
+        if (serviceRate) {
+          data.cost = data.value * serviceRate.unit_price;
+          logger.info(`Calculated cost for ${serviceCode}: ${data.value} x ${serviceRate.unit_price} = ${data.cost}`);
+        }
+      }
+    }
+  } else {
+    logger.info('No meter readings found, trying to get data from invoices');
+    // Fallback: Get data from invoices
+    const invoices = await Invoice.find({
+      room_id: roomId,
+      period_start: { $gte: startDate, $lte: endDate }
+    }).populate('items.service_type_id');
+    
+    logger.info(`Found ${invoices.length} invoices`);
+    
+    if (invoices && invoices.length > 0) {
+      invoices.forEach(invoice => {
+        invoice.items.forEach(item => {
+          if (item.item_type === 'service') {
+            // Map service types
+            let serviceKey = null;
+            if (item.description.toLowerCase().includes('điện') || item.description.toLowerCase().includes('electric')) {
+              serviceKey = 'electricity';
+            } else if (item.description.toLowerCase().includes('nước') || item.description.toLowerCase().includes('water')) {
+              serviceKey = 'water';
+            } else if (item.description.toLowerCase().includes('internet') || item.description.toLowerCase().includes('wifi')) {
+              serviceKey = 'internet';
+            }
+            
+            if (serviceKey) {
+              if (!usage[serviceKey]) {
+                usage[serviceKey] = {
+                  value: 0,
+                  unit: serviceKey === 'electricity' ? 'kWh' : serviceKey === 'water' ? 'm³' : 'tháng',
+                  cost: 0
+                };
+              }
+              usage[serviceKey].value += item.quantity || 0;
+              usage[serviceKey].cost += item.amount || 0;
+            }
+          }
+        });
+      });
     }
   }
   
+  logger.info(`Final usage data:`, JSON.stringify(usage));
   return usage;
 };
 

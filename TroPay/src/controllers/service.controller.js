@@ -180,6 +180,12 @@ const getMeterReadings = async (req, res) => {
     const startOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
     const endOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0, 23, 59, 59, 999);
     
+    logger.info(`Querying meter readings for date range:`, {
+      startOfMonth: startOfMonth.toISOString(),
+      endOfMonth: endOfMonth.toISOString(),
+      roomCount: rooms.length
+    });
+    
     // Get all service types
     const serviceTypes = await ServiceType.find();
     
@@ -190,6 +196,8 @@ const getMeterReadings = async (req, res) => {
     })
     .populate('service_type_id')
     .sort({ room_id: 1, 'service_type_id.code': 1 });
+    
+    logger.info(`Found ${readings.length} meter readings`);
     
     // Build result with ALL rooms
     const result = rooms.map(room => {
@@ -249,7 +257,7 @@ const getMeterReadings = async (req, res) => {
 const createMeterReadings = async (req, res) => {
   try {
     const ownerId = req.user.id;
-    const { readings } = req.body; // Array of { room_id, service_code, reading_value } or old format { room_id, service_type_id, reading_value }
+    const { readings, month, year } = req.body; // Array of { room_id, service_code, reading_value } or old format { room_id, service_type_id, reading_value }
     
     if (!readings || !Array.isArray(readings)) {
       return res.status(400).json({
@@ -270,9 +278,19 @@ const createMeterReadings = async (req, res) => {
       serviceTypeMap[st._id.toString()] = st._id; // Also support direct ID
     });
     
-    const targetDate = new Date();
+    // Use provided month/year or default to current month
+    const targetDate = month && year 
+      ? new Date(year, month - 1, 1)
+      : new Date();
     const startOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
     const endOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0, 23, 59, 59, 999);
+    
+    logger.info(`Creating meter readings for date range:`, {
+      month,
+      year,
+      startOfMonth: startOfMonth.toISOString(),
+      endOfMonth: endOfMonth.toISOString()
+    });
     
     const createdReadings = [];
     
@@ -307,18 +325,21 @@ const createMeterReadings = async (req, res) => {
         existingReading.recorded_by = ownerId;
         await existingReading.save();
         createdReadings.push(existingReading);
+        logger.info(`Updated reading for room ${room_id}, service ${serviceId}, value: ${reading_value}, date: ${existingReading.reading_date}`);
       } else {
-        // Create new reading
+        // Create new reading with the target date (middle of the month for consistency)
+        const readingDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), 15);
         const reading = new MeterReading({
           room_id,
           service_type_id: serviceId,
-          reading_date: new Date(),
+          reading_date: readingDate,
           reading_value,
           source: 'manual',
           recorded_by: ownerId
         });
         await reading.save();
         createdReadings.push(reading);
+        logger.info(`Created reading for room ${room_id}, service ${serviceId}, value: ${reading_value}, date: ${reading.reading_date}`);
       }
     }
     

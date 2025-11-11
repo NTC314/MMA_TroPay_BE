@@ -5,7 +5,8 @@ const router = express.Router();
 const {
   getOwnerDashboard,
   getOwnerRoomsWithSearch,
-  getRoomDetails
+  getRoomDetails,
+  getAvailableTenants
 } = require('../controllers/owner.controller');
 
 // Import middleware
@@ -33,6 +34,11 @@ router.get('/rooms', auth, ownerOnly, getOwnerRoomsWithSearch);
 // @desc    Get room details with full information
 // @access  Private (Owner only)
 router.get('/rooms/:id/details', auth, ownerOnly, validateObjectId('id'), getRoomDetails);
+
+// @route   GET /api/owner/tenants
+// @desc    Get available tenants list
+// @access  Private (Owner only)
+router.get('/tenants', auth, ownerOnly, getAvailableTenants);
 
 module.exports = router;
 

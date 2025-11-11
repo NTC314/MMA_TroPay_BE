@@ -147,6 +147,11 @@ io.use(socketAuth); // Apply authentication middleware
 io.on('connection', (socket) => {
   logger.info(`Socket connected: ${socket.id} - User: ${socket.user.id} (${socket.user.role})`);
   
+  // Auto-join user to their personal room
+  const userRoom = `user_${socket.user.id}`;
+  socket.join(userRoom);
+  logger.info(`Socket ${socket.id} auto-joined room ${userRoom}`);
+  
   // Handle manual room join (if needed)
   socket.on('join-room', (roomId) => {
     socket.join(roomId);
@@ -185,12 +190,13 @@ app.use('*', (req, res) => {
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0'; // Listen on all network interfaces
 
 // Database connection and server start
 connectDB()
   .then(() => {
-    server.listen(PORT, () => {
-      logger.info(`TroPay Backend Server running on port ${PORT}`);
+    server.listen(PORT, HOST, () => {
+      logger.info(`TroPay Backend Server running on ${HOST}:${PORT}`);
       logger.info(`API Documentation available at http://localhost:${PORT}/api-docs`);
       logger.info('MongoDB connected successfully');
     });

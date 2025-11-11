@@ -21,8 +21,18 @@ class MoMoServiceMock {
   /**
    * Mock create payment - Returns fake success response
    */
-  async createPayment(orderId, requestId, amount, orderInfo, extraData = '', lang = 'vi', autoCapture = true) {
+  async createPayment(params) {
     try {
+      const {
+        orderId,
+        amount,
+        orderInfo,
+        requestId,
+        extraData = '',
+        autoCapture = true,
+        lang = 'vi'
+      } = params;
+
       logger.info('🧪 Mock: Creating MoMo payment', {
         orderId,
         amount,
@@ -41,10 +51,10 @@ class MoMoServiceMock {
         responseTime: Date.now(),
         message: 'Mock: Successful',
         resultCode: 0,
-        payUrl: `${this.baseUrl}/mock-momo-payment.html?orderId=${orderId}&requestId=${requestId}&amount=${amount}`,
-        deeplink: `momo://payment?orderId=${orderId}&requestId=${requestId}&amount=${amount}`,
+        payUrl: `${this.baseUrl}/mock-momo-payment.html?orderId=${encodeURIComponent(orderId)}&requestId=${encodeURIComponent(requestId)}&amount=${amount}`,
+        deeplink: `momo://payment?orderId=${encodeURIComponent(orderId)}&requestId=${encodeURIComponent(requestId)}&amount=${amount}`,
         qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MOCK_${orderId}`,
-        deeplinkMiniApp: `momo://app?orderId=${orderId}`
+        deeplinkMiniApp: `momo://app?orderId=${encodeURIComponent(orderId)}`
       };
 
       logger.info('✅ Mock MoMo payment created successfully', {
@@ -70,8 +80,10 @@ class MoMoServiceMock {
   /**
    * Mock query transaction
    */
-  async queryTransaction(orderId, requestId) {
+  async queryTransaction(params) {
     try {
+      const { orderId, requestId } = params;
+      
       logger.info('🧪 Mock: Querying transaction', { orderId, requestId });
 
       await new Promise(resolve => setTimeout(resolve, 300));
@@ -95,8 +107,10 @@ class MoMoServiceMock {
   /**
    * Mock refund transaction
    */
-  async refundTransaction(orderId, requestId, amount, transId, description) {
+  async refund(params) {
     try {
+      const { orderId, requestId, amount, transId, description } = params;
+      
       logger.info('🧪 Mock: Refunding transaction', {
         orderId,
         amount,

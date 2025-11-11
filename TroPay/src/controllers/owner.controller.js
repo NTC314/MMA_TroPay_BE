@@ -394,9 +394,49 @@ function getTimeAgo(date) {
   }
 }
 
+// @desc    Get available tenants list
+// @route   GET /api/owner/tenants
+// @access  Private (Owner only)
+const getAvailableTenants = async (req, res) => {
+  try {
+    const ownerId = req.user.id;
+    
+    // Get all users with role 'tenant'
+    const tenants = await User.find({ 
+      role: 'tenant',
+      is_active: true 
+    })
+    .select('_id full_name phone email avatar id_card_number')
+    .sort({ full_name: 1 });
+
+    logger.info(`Owner ${ownerId} retrieved ${tenants.length} tenants`);
+
+    res.json({
+      success: true,
+      message: 'Danh sách người thuê được lấy thành công',
+      data: tenants.map(tenant => ({
+        _id: tenant._id,
+        full_name: tenant.full_name,
+        phone: tenant.phone,
+        email: tenant.email,
+        avatar: tenant.avatar,
+        id_card_number: tenant.id_card_number
+      }))
+    });
+
+  } catch (error) {
+    logger.error('Get available tenants error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Lỗi khi lấy danh sách người thuê'
+    });
+  }
+};
+
 module.exports = {
   getOwnerDashboard,
   getOwnerRoomsWithSearch,
-  getRoomDetails
+  getRoomDetails,
+  getAvailableTenants
 };
 
