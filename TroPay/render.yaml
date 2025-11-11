@@ -9,8 +9,8 @@ services:
     region: singapore
     plan: free
     rootDir: ./TroPay
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: npm ci --production=false || npm install
+    startCommand: node server.js
     envVars:
       - key: NODE_ENV
         value: production
