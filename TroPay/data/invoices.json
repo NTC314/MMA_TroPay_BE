@@ -1,0 +1,201 @@
+[
+  {
+    "_id": { "$oid": "907f1f77bcf86cd799439051" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439041" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439031" },
+    "period_start": { "$date": "2025-10-01T00:00:00.000Z" },
+    "period_end": { "$date": "2025-10-31T23:59:59.999Z" },
+    "total_amount": 4250000,
+    "status": "issued",
+    "issued_at": { "$date": "2025-10-25T00:00:00.000Z" },
+    "due_date": { "$date": "2025-11-05T00:00:00.000Z" },
+    "paid_at": null,
+    "items": [
+      {
+        "item_type": "rent",
+        "description": "Tiền thuê phòng tháng 10/2025",
+        "quantity": 1,
+        "unit_price": 3500000,
+        "amount": 3500000,
+        "service_type_id": null
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền điện (150 kWh x 3500đ)",
+        "quantity": 150,
+        "unit_price": 3500,
+        "amount": 525000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439021" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền nước (5 m³ x 25000đ)",
+        "quantity": 5,
+        "unit_price": 25000,
+        "amount": 125000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439022" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền Internet",
+        "quantity": 1,
+        "unit_price": 100000,
+        "amount": 100000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439023" }
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "907f1f77bcf86cd799439052" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439041" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439031" },
+    "period_start": { "$date": "2025-09-01T00:00:00.000Z" },
+    "period_end": { "$date": "2025-09-30T23:59:59.999Z" },
+    "total_amount": 4180000,
+    "status": "paid",
+    "issued_at": { "$date": "2025-09-25T00:00:00.000Z" },
+    "due_date": { "$date": "2025-10-05T00:00:00.000Z" },
+    "paid_at": { "$date": "2025-10-03T14:30:00.000Z" },
+    "payment_method": "vnpay",
+    "items": [
+      {
+        "item_type": "rent",
+        "description": "Tiền thuê phòng tháng 9/2025",
+        "quantity": 1,
+        "unit_price": 3500000,
+        "amount": 3500000
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền điện (140 kWh x 3500đ)",
+        "quantity": 140,
+        "unit_price": 3500,
+        "amount": 490000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439021" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền nước (4 m³ x 25000đ)",
+        "quantity": 4,
+        "unit_price": 25000,
+        "amount": 100000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439022" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền Internet",
+        "quantity": 1,
+        "unit_price": 100000,
+        "amount": 100000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439023" }
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "907f1f77bcf86cd799439053" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439042" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439032" },
+    "period_start": { "$date": "2025-10-01T00:00:00.000Z" },
+    "period_end": { "$date": "2025-10-31T23:59:59.999Z" },
+    "total_amount": 3720000,
+    "status": "paid",
+    "issued_at": { "$date": "2025-10-25T00:00:00.000Z" },
+    "due_date": { "$date": "2025-11-05T00:00:00.000Z" },
+    "paid_at": { "$date": "2025-10-28T10:15:00.000Z" },
+    "payment_method": "vnpay",
+    "items": [
+      {
+        "item_type": "rent",
+        "description": "Tiền thuê phòng tháng 10/2025",
+        "quantity": 1,
+        "unit_price": 3000000,
+        "amount": 3000000
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền điện (130 kWh x 3500đ)",
+        "quantity": 130,
+        "unit_price": 3500,
+        "amount": 455000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439021" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền nước (4 m³ x 25000đ)",
+        "quantity": 4,
+        "unit_price": 25000,
+        "amount": 100000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439022" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền Internet",
+        "quantity": 1,
+        "unit_price": 100000,
+        "amount": 100000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439023" }
+      },
+      {
+        "item_type": "service",
+        "description": "Phí gửi xe máy",
+        "quantity": 1,
+        "unit_price": 50000,
+        "amount": 50000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439024" }
+      },
+      {
+        "item_type": "service",
+        "description": "Phí vệ sinh",
+        "quantity": 1,
+        "unit_price": 15000,
+        "amount": 15000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439025" }
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "907f1f77bcf86cd799439054" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439043" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439034" },
+    "period_start": { "$date": "2025-10-01T00:00:00.000Z" },
+    "period_end": { "$date": "2025-10-31T23:59:59.999Z" },
+    "total_amount": 3015000,
+    "status": "overdue",
+    "issued_at": { "$date": "2025-10-25T00:00:00.000Z" },
+    "due_date": { "$date": "2025-11-05T00:00:00.000Z" },
+    "paid_at": null,
+    "items": [
+      {
+        "item_type": "rent",
+        "description": "Tiền thuê phòng tháng 10/2025",
+        "quantity": 1,
+        "unit_price": 2500000,
+        "amount": 2500000
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền điện (100 kWh x 3500đ)",
+        "quantity": 100,
+        "unit_price": 3500,
+        "amount": 350000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439021" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền nước (3 m³ x 25000đ)",
+        "quantity": 3,
+        "unit_price": 25000,
+        "amount": 75000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439022" }
+      },
+      {
+        "item_type": "service",
+        "description": "Tiền Internet",
+        "quantity": 1,
+        "unit_price": 100000,
+        "amount": 100000,
+        "service_type_id": { "$oid": "607f1f77bcf86cd799439023" }
+      }
+    ]
+  }
+]

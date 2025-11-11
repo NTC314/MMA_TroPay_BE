@@ -1,0 +1,117 @@
+[
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439011" },
+    "phone": "0901234567",
+    "email": "owner1@tropay.com",
+    "password": "$2a$10$YourHashedPasswordHere1",
+    "full_name": "Nguyễn Văn Chủ",
+    "date_of_birth": { "$date": "1985-05-15T00:00:00.000Z" },
+    "avatar": "https://i.pravatar.cc/150?img=1",
+    "id_card_number": "001085012345",
+    "id_card_front_image": "/uploads/id_cards/owner1_front.jpg",
+    "id_card_back_image": "/uploads/id_cards/owner1_back.jpg",
+    "address": "123 Nguyễn Trãi, Quận 1, TP.HCM",
+    "role": "owner",
+    "kyc_status": "verified",
+    "is_active": true,
+    "is_phone_verified": true,
+    "is_email_verified": true,
+    "last_login": { "$date": "2025-10-29T08:00:00.000Z" },
+    "profile": {
+      "bio": "Chủ trọ chuyên nghiệp với 10 năm kinh nghiệm",
+      "bank_account": {
+        "bank_name": "Vietcombank",
+        "account_number": "1234567890",
+        "account_holder": "NGUYEN VAN CHU"
+      }
+    }
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "phone": "0902234567",
+    "email": "tenant1@tropay.com",
+    "password": "$2a$10$YourHashedPasswordHere2",
+    "full_name": "Trần Thị Thu",
+    "date_of_birth": { "$date": "1995-03-20T00:00:00.000Z" },
+    "avatar": "https://i.pravatar.cc/150?img=5",
+    "id_card_number": "001095012346",
+    "address": "456 Lê Lợi, Quận 3, TP.HCM",
+    "role": "tenant",
+    "kyc_status": "verified",
+    "is_active": true,
+    "is_phone_verified": true,
+    "is_email_verified": true,
+    "last_login": { "$date": "2025-10-29T07:30:00.000Z" },
+    "profile": {
+      "occupation": "Nhân viên văn phòng",
+      "emergency_contact": {
+        "name": "Trần Văn An",
+        "phone": "0903334567",
+        "relationship": "Bố"
+      }
+    }
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439013" },
+    "phone": "0903234567",
+    "email": "tenant2@tropay.com",
+    "password": "$2a$10$YourHashedPasswordHere3",
+    "full_name": "Lê Văn Nam",
+    "date_of_birth": { "$date": "1997-07-10T00:00:00.000Z" },
+    "avatar": "https://i.pravatar.cc/150?img=12",
+    "id_card_number": "001097012347",
+    "address": "789 Võ Văn Tần, Quận 10, TP.HCM",
+    "role": "tenant",
+    "kyc_status": "verified",
+    "is_active": true,
+    "is_phone_verified": true,
+    "is_email_verified": false,
+    "last_login": { "$date": "2025-10-28T19:00:00.000Z" },
+    "profile": {
+      "occupation": "Sinh viên",
+      "emergency_contact": {
+        "name": "Lê Thị Bình",
+        "phone": "0904445678",
+        "relationship": "Mẹ"
+      }
+    }
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439014" },
+    "phone": "0904234567",
+    "email": "tenant3@tropay.com",
+    "password": "$2a$10$YourHashedPasswordHere4",
+    "full_name": "Phạm Thị Mai",
+    "date_of_birth": { "$date": "1998-11-25T00:00:00.000Z" },
+    "avatar": "https://i.pravatar.cc/150?img=20",
+    "id_card_number": "001098012348",
+    "address": "321 Hai Bà Trưng, Quận 3, TP.HCM",
+    "role": "tenant",
+    "kyc_status": "pending",
+    "is_active": true,
+    "is_phone_verified": true,
+    "is_email_verified": false,
+    "last_login": { "$date": "2025-10-27T15:00:00.000Z" },
+    "profile": {
+      "occupation": "Freelancer"
+    }
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439015" },
+    "phone": "0905234567",
+    "email": "admin@tropay.com",
+    "password": "$2a$10$YourHashedPasswordHere5",
+    "full_name": "Quản Trị Viên",
+    "date_of_birth": { "$date": "1990-01-01T00:00:00.000Z" },
+    "avatar": "https://i.pravatar.cc/150?img=33",
+    "role": "admin",
+    "kyc_status": "verified",
+    "is_active": true,
+    "is_phone_verified": true,
+    "is_email_verified": true,
+    "last_login": { "$date": "2025-10-29T09:00:00.000Z" },
+    "profile": {
+      "department": "IT"
+    }
+  }
+]

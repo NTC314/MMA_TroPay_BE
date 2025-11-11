@@ -1,0 +1,33 @@
+# Render.com Deployment Configuration
+# https://render.com/docs/yaml-spec
+
+services:
+  # Backend API Service
+  - type: web
+    name: tropay-backend
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false  # Set in Render dashboard
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRE
+        value: 7d
+      - key: MOMO_PARTNER_CODE
+        value: MOMO
+      - key: MOMO_ACCESS_KEY
+        value: F8BBA842ECF85
+      - key: MOMO_SECRET_KEY
+        value: K951B6PE1waDMi640xX08PD3vg6EkVlz
+      - key: MOMO_ENDPOINT
+        value: https://test-payment.momo.vn
+    healthCheckPath: /health
+    autoDeploy: true

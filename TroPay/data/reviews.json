@@ -1,0 +1,54 @@
+[
+  {
+    "_id": { "$oid": "b07f1f77bcf86cd799439071" },
+    "owner_id": { "$oid": "507f1f77bcf86cd799439011" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439031" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439041" },
+    "rating": 5,
+    "comment": "Phòng rất đẹp và sạch sẽ. Chủ trọ nhiệt tình, hỗ trợ tốt. Rất hài lòng!",
+    "sentiment": "positive",
+    "issues": [],
+    "meta": {},
+    "created_at": { "$date": "2025-10-15T10:30:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "b07f1f77bcf86cd799439072" },
+    "owner_id": { "$oid": "507f1f77bcf86cd799439011" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439013" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439032" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439042" },
+    "rating": 4,
+    "comment": "Phòng tốt, vị trí thuận tiện. Chỉ có điều đôi khi hơi ồn vào cuối tuần.",
+    "sentiment": "positive",
+    "issues": ["Ồn ào"],
+    "meta": {},
+    "created_at": { "$date": "2025-10-14T16:20:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "b07f1f77bcf86cd799439073" },
+    "owner_id": { "$oid": "507f1f77bcf86cd799439011" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439014" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439034" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439043" },
+    "rating": 3,
+    "comment": "Phòng ok, giá hợp lý nhưng Internet hơi chậm.",
+    "sentiment": "neutral",
+    "issues": ["Internet chậm"],
+    "meta": {},
+    "created_at": { "$date": "2025-10-20T09:15:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "b07f1f77bcf86cd799439074" },
+    "owner_id": { "$oid": "507f1f77bcf86cd799439011" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439031" },
+    "contract_id": { "$oid": "807f1f77bcf86cd799439041" },
+    "rating": 5,
+    "comment": "Chủ nhà xử lý sự cố nhanh chóng. Phòng tiện nghi đầy đủ.",
+    "sentiment": "positive",
+    "issues": [],
+    "meta": {},
+    "created_at": { "$date": "2025-10-21T14:30:00.000Z" }
+  }
+]

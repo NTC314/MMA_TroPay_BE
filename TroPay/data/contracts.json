@@ -1,0 +1,68 @@
+[
+  {
+    "_id": { "$oid": "807f1f77bcf86cd799439041" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439031" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "start_date": { "$date": "2025-01-01T00:00:00.000Z" },
+    "end_date": { "$date": "2025-12-31T23:59:59.999Z" },
+    "rent_amount": 3500000,
+    "deposit_amount": 7000000,
+    "status": "active",
+    "terms": {
+      "payment_due_day": 5,
+      "utilities_included": false,
+      "notice_period_days": 30,
+      "rules": [
+        "Không nuôi thú cưng",
+        "Giữ vệ sinh chung",
+        "Không gây ồn sau 22h",
+        "Thanh toán đúng hạn"
+      ],
+      "deposit_refund_terms": "Hoàn trả sau 7 ngày kể từ ngày trả phòng, trừ các chi phí hư hỏng (nếu có)"
+    },
+    "created_at": { "$date": "2024-12-25T00:00:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "807f1f77bcf86cd799439042" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439032" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439013" },
+    "start_date": { "$date": "2024-09-01T00:00:00.000Z" },
+    "end_date": { "$date": "2025-08-31T23:59:59.999Z" },
+    "rent_amount": 3000000,
+    "deposit_amount": 6000000,
+    "status": "active",
+    "terms": {
+      "payment_due_day": 5,
+      "utilities_included": false,
+      "notice_period_days": 30,
+      "rules": [
+        "Không nuôi thú cưng",
+        "Giữ vệ sinh chung",
+        "Không gây ồn sau 22h",
+        "Thanh toán đúng hạn"
+      ]
+    },
+    "created_at": { "$date": "2024-08-25T00:00:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "807f1f77bcf86cd799439043" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439034" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439014" },
+    "start_date": { "$date": "2025-03-01T00:00:00.000Z" },
+    "end_date": { "$date": "2026-02-28T23:59:59.999Z" },
+    "rent_amount": 2500000,
+    "deposit_amount": 5000000,
+    "status": "active",
+    "terms": {
+      "payment_due_day": 5,
+      "utilities_included": false,
+      "notice_period_days": 30,
+      "rules": [
+        "Không nuôi thú cưng",
+        "Giữ vệ sinh chung",
+        "Không gây ồn sau 22h"
+      ]
+    },
+    "created_at": { "$date": "2025-02-25T00:00:00.000Z" }
+  }
+]

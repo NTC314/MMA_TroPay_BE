@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "import-data": "node import-data.js"
+  }
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "_id": { "$oid": "607f1f77bcf86cd799439021" },
+    "code": "electricity",
+    "name": "Tiền điện",
+    "unit": "kWh",
+    "description": "Tiền điện sinh hoạt"
+  },
+  {
+    "_id": { "$oid": "607f1f77bcf86cd799439022" },
+    "code": "water",
+    "name": "Tiền nước",
+    "unit": "m³",
+    "description": "Tiền nước sinh hoạt"
+  },
+  {
+    "_id": { "$oid": "607f1f77bcf86cd799439023" },
+    "code": "internet",
+    "name": "Tiền Internet",
+    "unit": "tháng",
+    "description": "Dịch vụ Internet"
+  },
+  {
+    "_id": { "$oid": "607f1f77bcf86cd799439024" },
+    "code": "parking",
+    "name": "Tiền gửi xe",
+    "unit": "xe",
+    "description": "Phí gửi xe"
+  },
+  {
+    "_id": { "$oid": "607f1f77bcf86cd799439025" },
+    "code": "cleaning",
+    "name": "Phí vệ sinh",
+    "unit": "tháng",
+    "description": "Phí vệ sinh chung"
+  }
+]

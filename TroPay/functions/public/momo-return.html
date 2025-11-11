@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đang xử lý thanh toán...</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .button {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      text-decoration: none;
+      padding: 14px 30px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+    }
+    .debug {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 10px;
+      font-size: 12px;
+      color: #666;
+      text-align: left;
+      display: none;
+    }
+    .debug.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="spinner" id="spinner"></div>
+    <h1 id="title">Thanh toán thành công! ✅</h1>
+    <p id="message">Vui lòng quay lại ứng dụng TroPay để xem kết quả</p>
+    <button class="button" id="backBtn" onclick="window.close()">
+      Đóng trang này
+    </button>
+    <div class="debug" id="debug"></div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const resultCode = urlParams.get('resultCode') || '0';
+    const orderId = urlParams.get('orderId') || '';
+    const requestId = urlParams.get('requestId') || '';
+    const transId = urlParams.get('transId') || '';
+    const message = urlParams.get('message') || '';
+
+    // Update UI based on result
+    const titleEl = document.getElementById('title');
+    const messageEl = document.getElementById('message');
+    const spinnerEl = document.getElementById('spinner');
+    const debugEl = document.getElementById('debug');
+
+    if (resultCode === '0' || resultCode === '9000') {
+      // Success
+      spinnerEl.style.display = 'none';
+      titleEl.textContent = 'Thanh toán thành công! ✅';
+      titleEl.style.color = '#4CAF50';
+      messageEl.innerHTML = `
+        <strong>Giao dịch đã được xử lý thành công</strong><br><br>
+        Vui lòng quay lại ứng dụng TroPay để xem chi tiết hóa đơn đã thanh toán.
+      `;
+    } else {
+      // Failed
+      spinnerEl.style.display = 'none';
+      titleEl.textContent = 'Thanh toán thất bại ❌';
+      titleEl.style.color = '#F44336';
+      messageEl.innerHTML = `
+        <strong>${message || 'Giao dịch không thành công'}</strong><br><br>
+        Vui lòng quay lại ứng dụng TroPay và thử lại.
+      `;
+    }
+
+    // Debug info
+    debugEl.innerHTML = `
+      <strong>Thông tin giao dịch:</strong><br>
+      Mã kết quả: ${resultCode}<br>
+      Mã đơn hàng: ${orderId}<br>
+      Mã yêu cầu: ${requestId}<br>
+      ${transId ? `Mã giao dịch: ${transId}<br>` : ''}
+      <br>
+      <small style="color: #999;">
+        💡 Mẹo: Hóa đơn trong app sẽ tự động cập nhật trạng thái.<br>
+        Bạn có thể đóng trang này và quay lại app.
+      </small>
+    `;
+
+    // Show debug after 2 seconds
+    setTimeout(() => {
+      debugEl.classList.add('show');
+    }, 2000);
+
+    console.log('📱 MoMo Payment Result:', {
+      resultCode,
+      orderId,
+      requestId,
+      transId,
+      message
+    });
+  </script>
+</body>
+</html>

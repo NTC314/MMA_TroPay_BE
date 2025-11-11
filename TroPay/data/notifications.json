@@ -1,0 +1,81 @@
+[
+  {
+    "_id": { "$oid": "d07f1f77bcf86cd799439091" },
+    "user_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "type": "general",
+    "priority": "medium",
+    "title": "Hóa đơn tháng 10/2025",
+    "message": "Hóa đơn phòng P101 tháng 10/2025 đã được phát hành. Tổng tiền: 4,250,000đ. Hạn thanh toán: 05/11/2025",
+    "data": {
+      "invoice_id": "907f1f77bcf86cd799439051",
+      "amount": 4250000,
+      "due_date": "2025-11-05"
+    },
+    "is_read": false,
+    "createdAt": { "$date": "2025-10-25T10:00:00.000Z" },
+    "updatedAt": { "$date": "2025-10-25T10:00:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "d07f1f77bcf86cd799439092" },
+    "user_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "type": "general",
+    "priority": "medium",
+    "title": "Yêu cầu bảo trì đang được xử lý",
+    "message": "Yêu cầu 'Điều hòa không làm lạnh' của bạn đang được xử lý. Chúng tôi sẽ liên hệ sớm.",
+    "data": {
+      "request_id": "a07f1f77bcf86cd799439061"
+    },
+    "is_read": true,
+    "read_at": { "$date": "2025-10-27T09:30:00.000Z" },
+    "createdAt": { "$date": "2025-10-27T09:00:00.000Z" },
+    "updatedAt": { "$date": "2025-10-27T09:30:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "d07f1f77bcf86cd799439093" },
+    "user_id": { "$oid": "507f1f77bcf86cd799439013" },
+    "type": "transaction",
+    "priority": "medium",
+    "title": "Thanh toán thành công",
+    "message": "Bạn đã thanh toán thành công hóa đơn tháng 10/2025. Số tiền: 3,720,000đ",
+    "data": {
+      "invoice_id": "907f1f77bcf86cd799439053",
+      "amount": 3720000
+    },
+    "is_read": true,
+    "read_at": { "$date": "2025-10-28T10:20:00.000Z" },
+    "createdAt": { "$date": "2025-10-28T10:16:00.000Z" },
+    "updatedAt": { "$date": "2025-10-28T10:20:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "d07f1f77bcf86cd799439094" },
+    "user_id": { "$oid": "507f1f77bcf86cd799439011" },
+    "type": "transaction",
+    "priority": "medium",
+    "title": "Nhận được thanh toán",
+    "message": "Phòng P102 đã thanh toán hóa đơn tháng 10/2025. Số tiền: 3,720,000đ",
+    "data": {
+      "invoice_id": "907f1f77bcf86cd799439053",
+      "amount": 3720000,
+      "room_code": "P102"
+    },
+    "is_read": false,
+    "createdAt": { "$date": "2025-10-28T10:16:00.000Z" },
+    "updatedAt": { "$date": "2025-10-28T10:16:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "d07f1f77bcf86cd799439095" },
+    "user_id": { "$oid": "507f1f77bcf86cd799439014" },
+    "type": "general",
+    "priority": "high",
+    "title": "Nhắc nhở thanh toán",
+    "message": "Hóa đơn tháng 10/2025 sắp đến hạn (05/11/2025). Vui lòng thanh toán kịp thời để tránh phí phạt.",
+    "data": {
+      "invoice_id": "907f1f77bcf86cd799439054",
+      "amount": 3015000,
+      "due_date": "2025-11-05"
+    },
+    "is_read": false,
+    "createdAt": { "$date": "2025-10-29T08:00:00.000Z" },
+    "updatedAt": { "$date": "2025-10-29T08:00:00.000Z" }
+  }
+]

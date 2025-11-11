@@ -1,9 +1,13 @@
 node_modules/
 dist/
 .env
+.env.*
+!.env.example
 logs/*.log
+*.log
 uploads/*
 !uploads/.gitkeep
+temp/*
 coverage/
 .nyc_output/
 *.tgz
@@ -17,3 +21,9 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Test & Development Scripts
+test-*.js
+import-data.js
+update-ip.js
+setup-env.js

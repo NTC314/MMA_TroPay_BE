@@ -1,0 +1,47 @@
+[
+  {
+    "_id": { "$oid": "c07f1f77bcf86cd799439081" },
+    "service_type_id": { "$oid": "607f1f77bcf86cd799439021" },
+    "room_id": null,
+    "start_date": { "$date": "2025-01-01T00:00:00.000Z" },
+    "end_date": { "$date": "2025-12-31T23:59:59.999Z" },
+    "unit_price": 3500,
+    "calc_formula": {}
+  },
+  {
+    "_id": { "$oid": "c07f1f77bcf86cd799439082" },
+    "service_type_id": { "$oid": "607f1f77bcf86cd799439022" },
+    "room_id": null,
+    "start_date": { "$date": "2025-01-01T00:00:00.000Z" },
+    "end_date": { "$date": "2025-12-31T23:59:59.999Z" },
+    "unit_price": 25000,
+    "calc_formula": {}
+  },
+  {
+    "_id": { "$oid": "c07f1f77bcf86cd799439083" },
+    "service_type_id": { "$oid": "607f1f77bcf86cd799439023" },
+    "room_id": null,
+    "start_date": { "$date": "2025-01-01T00:00:00.000Z" },
+    "end_date": { "$date": "2025-12-31T23:59:59.999Z" },
+    "unit_price": 100000,
+    "calc_formula": {}
+  },
+  {
+    "_id": { "$oid": "c07f1f77bcf86cd799439084" },
+    "service_type_id": { "$oid": "607f1f77bcf86cd799439024" },
+    "room_id": null,
+    "start_date": { "$date": "2025-01-01T00:00:00.000Z" },
+    "end_date": { "$date": "2025-12-31T23:59:59.999Z" },
+    "unit_price": 50000,
+    "calc_formula": {}
+  },
+  {
+    "_id": { "$oid": "c07f1f77bcf86cd799439085" },
+    "service_type_id": { "$oid": "607f1f77bcf86cd799439025" },
+    "room_id": null,
+    "start_date": { "$date": "2025-01-01T00:00:00.000Z" },
+    "end_date": { "$date": "2025-12-31T23:59:59.999Z" },
+    "unit_price": 15000,
+    "calc_formula": {}
+  }
+]

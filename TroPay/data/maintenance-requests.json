@@ -1,0 +1,62 @@
+[
+  {
+    "_id": { "$oid": "a07f1f77bcf86cd799439061" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439031" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "title": "Điều hòa không làm lạnh",
+    "description": "Điều hòa chạy nhưng không thổi lạnh, có tiếng kêu lạ. Yêu cầu kiểm tra và sửa chữa.",
+    "status": "in_progress",
+    "priority": "high",
+    "assigned_to": null,
+    "resolved_at": null,
+    "created_at": { "$date": "2025-10-27T08:30:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "a07f1f77bcf86cd799439062" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439032" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439013" },
+    "title": "Vòi nước nhỏ giọt",
+    "description": "Vòi nước lavabo trong phòng tắm bị nhỏ giọt liên tục, lãng phí nước.",
+    "status": "open",
+    "priority": "normal",
+    "assigned_to": null,
+    "resolved_at": null,
+    "created_at": { "$date": "2025-10-28T14:20:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "a07f1f77bcf86cd799439063" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439031" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439012" },
+    "title": "Bóng đèn hành lang hỏng",
+    "description": "Bóng đèn hành lang tầng 1 bị hỏng, tối không nhìn thấy gì.",
+    "status": "resolved",
+    "priority": "normal",
+    "assigned_to": null,
+    "resolved_at": { "$date": "2025-10-26T16:00:00.000Z" },
+    "created_at": { "$date": "2025-10-25T19:00:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "a07f1f77bcf86cd799439064" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439034" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439014" },
+    "title": "Khóa cửa bị kẹt",
+    "description": "Khóa cửa phòng bị kẹt, khó mở. Yêu cầu thay mới.",
+    "status": "open",
+    "priority": "high",
+    "assigned_to": null,
+    "resolved_at": null,
+    "created_at": { "$date": "2025-10-29T07:45:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "a07f1f77bcf86cd799439065" },
+    "room_id": { "$oid": "707f1f77bcf86cd799439032" },
+    "tenant_id": { "$oid": "507f1f77bcf86cd799439013" },
+    "title": "Tường bị thấm nước",
+    "description": "Góc tường phía ban công bị thấm nước mỗi khi mưa. Cần kiểm tra và xử lý chống thấm.",
+    "status": "closed",
+    "priority": "normal",
+    "assigned_to": null,
+    "resolved_at": { "$date": "2025-10-20T15:30:00.000Z" },
+    "created_at": { "$date": "2025-10-15T10:00:00.000Z" }
+  }
+]
